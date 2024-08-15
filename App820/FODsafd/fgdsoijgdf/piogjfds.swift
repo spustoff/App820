@@ -45,34 +45,9 @@ class WController: UIViewController, WKNavigationDelegate, WKUIDelegate {
     
     private func getRequest() {
         
-        fetchData { server1_0, landing_request, codeTech, error in
-            
-            if let error = error {
-                
-                print("Ошибка: \(error.localizedDescription)")
-                
-                guard let url = URL(string: "https://google.com") else { return }
-                self.url_link = url
-                self.getInfo()
-                
-            } else {
-                
-                if let landing_request = landing_request {
-                    
-                    guard let url = URL(string: landing_request) else { return }
-                    self.url_link = url
-                    self.getInfo()
-                    
-                } else {
-                    
-                    guard let url = URL(string: "https://google.com") else { return }
-                    self.url_link = url
-                    self.getInfo()
-                    
-                    print("Ключ 'url' не найден в JSON.")
-                }
-            }
-        }
+        guard let url = URL(string: DataManager().landing_request) else { return }
+        self.url_link = url
+        self.getInfo()
     }
     
     private func getInfo() {
@@ -221,4 +196,3 @@ struct WControllerRepresentable: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: WController, context: Context) {}
 }
-
